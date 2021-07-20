@@ -7,12 +7,10 @@ import java.lang.reflect.Field;
 import java.util.Properties;
 
 public class InitAppProperties {
-    private final static String PROP_FILE = "src/main/resources/app.properties";
 
-    public void init(Object toInit) {
+    public void init(Object toInit, Properties prop) {
         Class<?> classToInit = toInit.getClass();
         Field[] fields = classToInit.getFields();
-        Properties prop = loadFromFile();
         for (Field f : fields) {
             if (f.isAnnotationPresent(PropertyKey.class)) {
                 String propKeyValue = f.getAnnotation(PropertyKey.class).value();
@@ -56,15 +54,6 @@ public class InitAppProperties {
         }
     }
 
-    private Properties loadFromFile() {
-        Properties properties = new Properties();
-        try (InputStream prop = new FileInputStream(PROP_FILE)) {
-            properties.load(prop);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return properties;
-    }
 }
 
 
