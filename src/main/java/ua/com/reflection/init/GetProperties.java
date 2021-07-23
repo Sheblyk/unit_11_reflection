@@ -9,7 +9,7 @@ public class GetProperties {
 
     public Properties loadFromFile() {
         Properties properties = new Properties();
-        try (InputStream prop = new FileInputStream("src/main/resources/app.properties")) {
+        try (InputStream prop = getClass().getClassLoader().getResourceAsStream("app.properties")) {
             properties.load(prop);
         } catch (IOException e) {
             throw new RuntimeException(e);
